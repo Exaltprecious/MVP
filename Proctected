@@ -1,0 +1,8 @@
+@app.route('/protected', methods=['GET'])
+@jwt_required()
+def protected():
+    current_user = get_jwt_identity()
+    return jsonify({
+        "message": f"Welcome, you are logged in as {current_user['username']}",
+        "logged_in_as": current_user
+    }), 200

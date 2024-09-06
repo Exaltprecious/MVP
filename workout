@@ -1,0 +1,66 @@
+from flask import Flask, render_template, request, redirect, url_for
+from flask_sqlalchemy import SQLAlchemy
+import os
+
+app = Flask(__name__)
+
+# Configure database
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///workouts.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Initialize the database
+db = SQLAlchemy(app)
+
+# Directory to store uploaded profile pictures
+UPLOAD_FOLDER = 'static/uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# Ensure the upload folder exists
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
+# Workout model
+class Workout(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.String(100), nullable=False)
+    type = db.Column(db.String(100), nullable=False)
+    duration = db.Column(db.Integer, nullable=False)  # duration in minutes
+    notes = db.Column(db.Text, nullable=True)
+
+# Create the database
+with app.app_context():
+    db.create_all()
+
+@app.route('/')
+def profile_form():
+    return render_template('profile_form.html')
+
+@app.route('/submit_profile', methods=['POST'])
+def submit_profile():
+    # Handle profile submission (same as before)
+    return redirect(url_for('profile_form'))
+
+@app.route('/log_workout', methods=['GET', 'POST'])
+def log_workout():
+    if request.method == 'POST':
+        date = request.form['date']
+        workout_type = request.form['type']
+        duration = request.form['duration']
+        notes = request.form['notes']
+
+        # Create a new workout log entry
+        new_workout = Workout(date=date, type=workout_type, duration=duration, notes=notes)
+        db.session.add(new_workout)
+        db.session.commit()
+
+        return redirect(url_for('workout_history'))
+
+    return render_template('log_workout.html')
+
+@app.route('/workout_history')
+def workout_history():
+    workouts = Workout.query.all()
+    return render_template('workout_history.html', workouts=workouts)
+
+if __name__ == '__main__':
+    app.run(debug=True)

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .profile-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .profile-container label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .profile-container input[type="text"],
+        .profile-container input[type="email"],
+        .profile-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        .profile-container input[type="submit"] {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .profile-container input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .profile-picture {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .profile-picture img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+
+<div class="profile-container">
+    <h2>User Profile</h2>
+    <form action="/submit_profile" method="POST">
+        <div class="profile-picture">
+            <img src="profile-picture-url" alt="Profile Picture">
+        </div>
+
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter your full name">
+
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" placeholder="Choose a username">
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email">
+
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" placeholder="City, State, Country">
+
+        <label for="bio">Bio:</label>
+        <textarea id="bio" name="bio" rows="4" placeholder="Tell us about yourself"></textarea>
+
+        <label for="skills">Skills:</label>
+        <textarea id="skills" name="skills" rows="3" placeholder="List your skills"></textarea>
+
+        <label for="projects">Projects:</label>
+        <textarea id="projects" name="projects" rows="3" placeholder="Describe your projects"></textarea>
+
+        <label for="interests">Interests:</label>
+        <textarea id="interests" name="interests" rows="2" placeholder="Your interests"></textarea>
+
+        <label for="social-links">Social Media Links:</label>
+        <textarea id="social-links" name="social-links" rows="2" placeholder="GitHub, LinkedIn, etc."></textarea>
+
+        <input type="submit" value="Save Profile">
+    </form>
+</div>
+
+</body>
+</html>

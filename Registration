@@ -1,0 +1,22 @@
+@app.route('/register', methods=['POST'])
+def register():
+    data = request.get_json()
+    username = data.get('username')
+    email = data.get('email')
+    password = data.get('password')
+
+    # Check if user already exists
+    user_exists = User.query.filter_by(email=email).first()
+    if user_exists:
+        return jsonify({"message": "User already exists"}), 400
+
+    # Hash the password
+    password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
+
+    # Create and save the user
+    new_user = User(username=username, email=email, password_hash=password_hash)
+    db.session.add(new_user)
+    db.session.commit()
+
+    return jsonify({"message": "User registered successfully"}), 201
+
